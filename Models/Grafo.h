@@ -1,15 +1,24 @@
 #ifndef GRAFO_H
 #define GRAFO_H
 #include "Node.h"
+#include <vector>
+#include <iostream>
+#include <string>
+using namespace std;
 
 template <typename E>
 class Grafo{
     public:
     Node** lista = new Node*[27];
+    int iniciales[6] = {0,1,9,10,18,19};
+    int current;
+    vector<char> size;
+    char lastChar;
+    int next;
 
     Grafo(){
         for(int i = 0; i < 27;  i++){
-            lista[i]= new Node(); 
+            lista[i]= new Node(i); 
         }
         //creacion de relaciones
         //primer piso del cubo
@@ -159,6 +168,27 @@ class Grafo{
         for (int i=0; i<27; i++)
             delete lista[i];
         delete[] lista;
+    }               
+    void probabilistic(int pRandom){
+        current = iniciales[pRandom];
+        //se saca el nodo inicial
+        char condicionador = '0';
+        while(true){
+            size = lista[current]->getSize(); 
+            lastChar = size[rand()% size.size()];
+            if (condicionador < lastChar && lista[current]->getVisitado() == false){
+                cout << lastChar;
+                next = lista[current]->getNext(lastChar);
+                current = next;
+                condicionador = lastChar;
+            }
+            else{
+                //No hace la verificacion de si uno es mayor lexicograficamente de otro
+                cout << lastChar;
+                break;
+            }
+        }
+        cout << endl;
     }
 };
 
