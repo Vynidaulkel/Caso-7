@@ -1,18 +1,18 @@
 #ifndef NODE_H
 #define NODE_H
+#include <iostream>
+#include <unordered_map>
+using namespace std;
 
-template <typename E>
 class Node
 {
+    private:
+        unordered_map<Node*, char> neighboors;
     public:
-        E element;
-        Node<E> *next;
-        Node (E element, Node<E> *next = nullptr){
-            this -> element = element;
-            this -> next = next;
+        Node (){
         }
-        Node(Node<E> *next = nullptr){
-            this-> next = next;
+        void addNeighboor(Node* pNeighboor, char pValor){
+            neighboors[pNeighboor] =  pValor;
         }
 };
 
